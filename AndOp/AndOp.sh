@@ -104,10 +104,7 @@ oproot () {
     ndc resolver clearnetdns
     echo "DONE"
     
-    #echo -n "    Testing DNS servers... "
-    #REDIRECT_DNS=testdns()
     REDIRECT_DNS="8.8.8.8"
-    #echo "DONE"
     
     echo -n "    Redireting DNS server... "
     iptables -t nat -A OUTPUT -p udp --dport 53 -j DNAT --to-destination $REDIRECT_DNS:53
@@ -368,8 +365,6 @@ opadb () {
     setprop debug.vendor.viwifi_support 1
     setprop debug.operator.tools 1
     echo "DONE"
-    #dumpsys deviceidle whitelist +com.android.overlay.gmssettings
-    #cmd wifi force-low-latency-mode enabled
     
     echo
     #########################
@@ -399,9 +394,9 @@ opadb () {
     echo -n "    Overclocking CPU... "
     for cpucode in $(ls /sys/devices/system/cpu/ | grep "cpu")
     do
-        echo userspace > /sys/devices/system/cpu/$cpucode/cpufreq/scaling_governor > /dev/null
-        echo 1600000 > /sys/devices/system/cpu/$cpucode/cpufreq/scaling_max_freq > /dev/null
-        echo 1600000 > /sys/devices/system/cpu/$cpucode/cpufreq/scaling_min_freq > /dev/null
+        echo userspace > /sys/devices/system/cpu/$cpucode/cpufreq/scaling_governor > /dev/null 2>&1
+        echo 1600000 > /sys/devices/system/cpu/$cpucode/cpufreq/scaling_max_freq > /dev/null 2>&1
+        echo 1600000 > /sys/devices/system/cpu/$cpucode/cpufreq/scaling_min_freq > /dev/null 2>&1
     done
     echo "DONE"
     echo -n "    General overclocking options... "
